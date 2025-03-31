@@ -6,9 +6,10 @@ import SHAPE_LOGO_URL from '../assets/images/shape-logo.png'
 import REDSTONE_LOGO_URL from '../assets/images/redstone-logo.svg'
 import REDSTONE_GARNET_LOGO_URL from '../assets/images/redstone-garnet-logo.png'
 import INK_LOGO_URL from '../assets/images/ink-logo.png'
+import GRAPH_NODE_URL from '../apollo/client'
 
 export function getSubgraphLink(chainSlug, isV2 = true) {
-    return `https://graph-node.internal.reservoir.tools/subgraphs/name/${chainSlug}/${isV2 ? 'v2' : 'blocks'}-subgraph`
+    return `${GRAPH_NODE_URL}/reservoir.tools/subgraphs/name/${chainSlug}/${isV2 ? 'v2' : 'blocks'}-subgraph`
 }
 
 
