@@ -47,7 +47,7 @@ export default function GlobalStats() {
               }}
               style={{ position: 'relative' }}
             >
-              Network: <Medium>Mode Mainnet</Medium>
+              Network: <Medium>Anime Mainnet</Medium>
             </TYPE.main>
           )}
           {!below400 && (

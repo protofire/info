@@ -6,7 +6,7 @@ export const GRAPH_NODE_URL = process.env.REACT_APP_GRAPH_NODE_URL ?? `https://g
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/mode/v2-subgraph`,
+    uri: `${GRAPH_NODE_URL}/subgraphs/name/anime/v2-subgraph`,
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -38,7 +38,7 @@ export const stakingClient = new ApolloClient({
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/mode/blocks-subgraph`,
+    uri: `${GRAPH_NODE_URL}/subgraphs/name/anime/blocks-subgraph`,
   }),
   cache: new InMemoryCache(),
 })

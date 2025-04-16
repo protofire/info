@@ -42,24 +42,28 @@ export function getPoolLink(token0Address, token1Address = null, remove = false)
     return (
       `https://swap.reservoir.tools/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${'ETH'}?chain=mode`
+      `/v2/${
+        token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
+      }/${'ETH'}?chain=anime`
     )
   } else {
     return (
       `https://swap.reservoir.tools/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address
-      }?chain=mode`
+      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${
+        token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address
+      }?chain=anime`
     )
   }
 }
 
 export function getSwapLink(token0Address, token1Address = null) {
   if (!token1Address) {
-    return `https://swap.reservoir.tools/#/swap?chain=mode?inputCurrency=${token0Address}`
+    return `https://swap.reservoir.tools/#/swap?chain=anime?inputCurrency=${token0Address}`
   } else {
-    return `https://swap.reservoir.tools/#/swap?chain=mode?inputCurrency=${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
-      }&outputCurrency=${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address}`
+    return `https://swap.reservoir.tools/#/swap?chain=anime?inputCurrency=${
+      token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
+    }&outputCurrency=${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address}`
   }
 }
 

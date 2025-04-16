@@ -1,7 +1,7 @@
-export const BLOCK_EXPLORER_URL = 'https://explorer.mode.network'
-export const BLOCK_EXPLORER_NAME = 'Mode Block Explorer'
+export const BLOCK_EXPLORER_URL = 'https://explorer-animechain-39xf6m45e3.t.conduit.xyz'
+export const BLOCK_EXPLORER_NAME = 'Anime Block Explorer'
 
-export const FACTORY_ADDRESS = '0x79ABbfdf20fc6DD0c51693bF9A481F7351A70Fd2'
+export const FACTORY_ADDRESS = '0xeCf9288395797Da137f663a7DD0F0CDF918776F8'
 
 export const BUNDLE_ID = '1'
 
