@@ -1,6 +1,6 @@
 {
-  "short_name": "Reservoir Swap V2 Info",
-  "name": "View statistics for Reservoir Swap V2 exchanges.",
+  "short_name": "Swap V2 Info",
+  "name": "View statistics for Swap V2 exchanges.",
   "icons": [
     {
       "src": "favicon.png",

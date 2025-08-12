@@ -8,7 +8,7 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import { BLOCK_EXPLORER_URL, timeframeOptions } from '../constants'
+import { BLOCK_EXPLORER_URL, CHAIN_SHORTNAME, SWAP_LINK, timeframeOptions } from '../constants'
 import Numeral from 'numeral'
 
 // format libraries
@@ -40,35 +40,35 @@ export function getTimeframe(timeWindow) {
 export function getPoolLink(token0Address, token1Address = null, remove = false) {
   if (!token1Address) {
     return (
-      `https://swap.reservoir.tools/#/` +
+      `${SWAP_LINK}/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${'ETH'}?chain=shape`
+      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${'ETH'}?chain=${CHAIN_SHORTNAME}`
     )
   } else {
     return (
-      `https://swap.reservoir.tools/#/` +
+      `${SWAP_LINK}/#/` +
       (remove ? `remove` : `add`) +
       `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address
-      }?chain=shape`
+      }?chain=${CHAIN_SHORTNAME}`
     )
   }
 }
 
 export function getSwapLink(token0Address, token1Address = null) {
   if (!token1Address) {
-    return `https://swap.reservoir.tools/#/swap?chain=shape?inputCurrency=${token0Address}`
+    return `${SWAP_LINK}/#/swap?chain=${CHAIN_SHORTNAME}?inputCurrency=${token0Address}`
   } else {
-    return `https://swap.reservoir.tools/#/swap?chain=shape?inputCurrency=${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
+    return `${SWAP_LINK}/#/swap?chain=${CHAIN_SHORTNAME}?inputCurrency=${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
       }&outputCurrency=${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address}`
   }
 }
 
 export function getMiningPoolLink(token0Address) {
-  return `https://swap.reservoir.tools/#/uni/ETH/${token0Address}`
+  return `${SWAP_LINK}/#/uni/ETH/${token0Address}`
 }
 
 export function getUniswapAppLink(linkVariable) {
-  let baseUniswapUrl = 'https://swap.reservoir.tools/#/uni'
+  let baseUniswapUrl = `${SWAP_LINK}/#/uni`
   if (!linkVariable) {
     return baseUniswapUrl
   }
