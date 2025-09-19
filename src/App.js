@@ -79,7 +79,7 @@ const WarningBanner = styled.div`
 `
 
 const UrlBanner = styled.div`
-  background-color: #6E56CF;
+  background-color: #D26378;
   padding: 1rem;
   color: white;
   width: 100%;

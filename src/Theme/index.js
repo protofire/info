@@ -48,31 +48,31 @@ const theme = (darkMode, color) => ({
   divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
   //primary colors
-  primary1: darkMode ? '#2172E5' : '#ff007a',
-  primary2: darkMode ? '#3680E7' : '#FF8CC3',
-  primary3: darkMode ? '#4D8FEA' : '#FF99C9',
+  primary1: darkMode ? '#D26378' : '#ff007a',
+  primary2: darkMode ? '#ea7086ff' : '#FF8CC3',
+  primary3: darkMode ? '#f9778fff' : '#FF99C9',
   primary4: darkMode ? '#376bad70' : '#F6DDE8',
   primary5: darkMode ? '#153d6f70' : '#FDEAF1',
 
   // color text
-  primaryText1: darkMode ? '#6da8ff' : '#ff007a',
+  primaryText1: darkMode ? '#ea7086ff' : '#ff007a',
 
   // secondary colors
-  secondary1: darkMode ? '#2172E5' : '#ff007a',
+  secondary1: darkMode ? '#D26378' : '#ff007a',
   secondary2: darkMode ? '#17000b26' : '#F6DDE8',
   secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
-  shadow1: darkMode ? '#000' : '#2F80ED',
+  shadow1: darkMode ? '#000' : '#D26378',
 
   // other
   red1: '#FF6871',
   green1: '#27AE60',
   yellow1: '#FFE270',
   yellow2: '#F3841E',
-  link: '#2172E5',
+  link: '#D26378',
   blue: '2f80ed',
 
-  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #ff007a30 0%, #fff 0%)`,
+  background: darkMode ? 'black' : `radial-gradient(50% 50% at 50% 50%, #a71b5f30 0%, #fff 0%)`,
 })
 
 const TextWrapper = styled(Text)`

@@ -4,6 +4,7 @@ import { RowFixed, RowBetween } from '../Row'
 import { useMedia } from 'react-use'
 import { useGlobalData, useEthPrice } from '../../contexts/GlobalData'
 import { formattedNum, localNumber } from '../../utils'
+import { CHAIN_SHORTNAME } from '../../constants'
 
 import UniPrice from '../UniPrice'
 import { TYPE } from '../../Theme'
@@ -47,7 +48,7 @@ export default function GlobalStats() {
               }}
               style={{ position: 'relative' }}
             >
-              Network: <Medium>Shape</Medium>
+              Network: <Medium>{CHAIN_SHORTNAME.toUpperCase()}</Medium>
             </TYPE.main>
           )}
           {!below400 && (
