@@ -1,8 +1,8 @@
-export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://abscan.org' //TEMP
-export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'Abstract Explorer'
-export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'abstract'
-export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x566d7510dee58360a64c9827257cf6d0dc43985e'
-export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://swap.w3us.site'
+export const BLOCK_EXPLORER_URL = 'https://abscan.org' 
+export const BLOCK_EXPLORER_NAME = 'Abstract Explorer'
+export const CHAIN_SHORTNAME = 'abstract'
+export const FACTORY_ADDRESS = '0x566d7510dee58360a64c9827257cf6d0dc43985e'
+export const SWAP_LINK = 'https://swap.w3us.site'
 
 export const BUNDLE_ID = '1'
 
