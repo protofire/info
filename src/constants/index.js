@@ -2,7 +2,7 @@ export const BLOCK_EXPLORER_URL = 'https://abscan.org'
 export const BLOCK_EXPLORER_NAME = 'Abstract Explorer'
 export const CHAIN_SHORTNAME = 'abstract'
 export const FACTORY_ADDRESS = '0x566d7510dee58360a64c9827257cf6d0dc43985e'
-export const SWAP_LINK = 'https://swap.w3us.site'
+export const SWAP_LINK = 'https://sakuraswap.com'
 
 export const BUNDLE_ID = '1'
 
