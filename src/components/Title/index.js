@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Flex } from 'rebass'
 import Link from '../Link'
 import { RowFixed } from '../Row'
-import Logo from '../../assets/logo_white.svg'
+import Logo from '../../assets/flow-logo.png'
 import Wordmark from '../../assets/wordmark_white.svg'
 
 import { BasicLink } from '../Link'
@@ -48,11 +48,11 @@ export default function Title() {
       <Flex alignItems="center" style={{ justifyContent: 'space-between' }}>
         <RowFixed align="center">
           <UniIcon id="link" onClick={() => history.push('/')} height={'28px'}>
-            <img width={'24px'} height={'28px'} src={Logo} alt="logo" />
+            <img width={'28px'} height={'28px'} src={Logo} alt="logo" />
           </UniIcon>
-          {!below1080 && (
+          {/* {!below1080 && (
             <img width={'84px'} style={{ marginLeft: '8px', marginTop: '0px' }} src={Wordmark} alt="logo" />
-          )}
+          )} */}
         </RowFixed>
         {below1080 && (
           <RowFixed style={{ alignItems: 'flex-end' }}>

@@ -1,8 +1,8 @@
-export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://shapescan.xyz/' //TEMP
-export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'ShapeScan'
-export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'shape'
-export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0xb411eaf2f2070822b26e372e3ea63c5060ba45e6'
-export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://temp.xyz'
+export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://evm-testnet.flowscan.io/'
+export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'Flowscan'
+export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'flow-testnet'
+export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x7d726261fb76b264fc20ea1f19d900d760136566'
+export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://staging.flowswap.io'
 
 export const BUNDLE_ID = '1'
 

@@ -3,11 +3,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
 import { CHAIN_SHORTNAME } from '../constants'
 
-export const GRAPH_NODE_URL = process.env.REACT_APP_GRAPH_NODE_URL ?? `https://graph-node.reservoir.tools`
+export const GRAPH_NODE_URL = process.env.REACT_APP_GRAPH_NODE_URL ?? `https://graph.swap.w3us.site`
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/v2-subgraph`,
+    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/uniswap-v2`,
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -39,7 +39,7 @@ export const stakingClient = new ApolloClient({
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/blocks-subgraph`,
+    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/blocks`,
   }),
   cache: new InMemoryCache(),
 })
