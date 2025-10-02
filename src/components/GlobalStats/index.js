@@ -47,7 +47,7 @@ export default function GlobalStats() {
               }}
               style={{ position: 'relative' }}
             >
-              Network: <Medium>Flow EVM Testnet</Medium>
+              Network: <Medium>Flow Mainnet</Medium>
             </TYPE.main>
           )}
           {!below400 && (
