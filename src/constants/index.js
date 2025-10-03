@@ -2,7 +2,7 @@ export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'h
 export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'FlowScan'
 export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'flow'
 export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0xeb5acc5b0d2e729ff2eff83b91954e37badf5bac'
-export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://staging.flowswap.io'
+export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://flowswap.io'
 
 export const BUNDLE_ID = '1'
 
