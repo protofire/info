@@ -5,9 +5,14 @@ import { CHAIN_SHORTNAME } from '../constants'
 
 export const GRAPH_NODE_URL = process.env.REACT_APP_GRAPH_NODE_URL ?? `https://graph-node.reservoir.tools`
 
+// TODO: revert
+// Temporary measure until migrated fully
+const subgraphName = GRAPH_NODE_URL === `https://graph-node.reservoir.tools` ? 'v2-subgraph' : 'uniswap-v2'
+const blockSubgraphName = GRAPH_NODE_URL === `https://graph-node.reservoir.tools` ? 'blocks-subgraph' : 'blocks'
+
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/v2-subgraph`,
+    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/${subgraphName}`,
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -39,7 +44,7 @@ export const stakingClient = new ApolloClient({
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/blocks-subgraph`,
+    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/${blockSubgraphName}`,
   }),
   cache: new InMemoryCache(),
 })
