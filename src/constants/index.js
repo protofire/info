@@ -1,8 +1,8 @@
-export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://evm.flowscan.io/'
-export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'FlowScan'
-export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'flow'
-export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x681d1bfe03522e0727730ba02a05cd3c0a08fa30'
-export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://staging.flowswap.io'
+export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://sepolia.basescan.org'
+export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'basescan-sepolia'
+export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'base-sepolia'
+export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x5fe87847fe20a6c30921620f52b06a4a3740aa61'
+export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://v2-info.testing.swap.w3us.site'
 
 export const BUNDLE_ID = '1'
 

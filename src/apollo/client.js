@@ -7,7 +7,7 @@ export const GRAPH_NODE_URL = process.env.REACT_APP_GRAPH_NODE_URL ?? `https://g
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/uniswap-v2`,
+    uri: `https://graph.swap.w3us.site/subgraphs/name/base-sepolia/uniswap-v2`,
   }),
   cache: new InMemoryCache(),
   shouldBatch: true,
@@ -39,7 +39,7 @@ export const stakingClient = new ApolloClient({
 
 export const blockClient = new ApolloClient({
   link: new HttpLink({
-    uri: `${GRAPH_NODE_URL}/subgraphs/name/${CHAIN_SHORTNAME}/blocks`,
+    uri: `https://graph.swap.w3us.site/subgraphs/name/base-sepolia/blocks`,
   }),
   cache: new InMemoryCache(),
 })
