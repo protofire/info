@@ -47,7 +47,7 @@ export default function GlobalStats() {
               }}
               style={{ position: 'relative' }}
             >
-              Network: <Medium>Flow Mainnet</Medium>
+              Network: <Medium>Base Sepolia</Medium>
             </TYPE.main>
           )}
           {!below400 && (
