@@ -18,6 +18,7 @@ import { TYPE } from '../../Theme'
 import { updateNameData } from '../../utils/data'
 import { BLOCK_EXPLORER_URL } from '../../constants'
 import { getTokenDisplaySymbol } from '../../utils/tokenSymbols'
+import { formatPairName } from '../../utils/formatPairName'
 dayjs.extend(utc)
 
 const PageButtons = styled.div`
@@ -167,9 +168,16 @@ function normalizePairSymbols(pair) {
     return { token0Symbol: '', token1Symbol: '' }
   }
   const normalized = updateNameData(pair)
+  const displaySymbol0 = getTokenDisplaySymbol(normalized?.token0?.symbol)
+  const displaySymbol1 = getTokenDisplaySymbol(normalized?.token1?.symbol)
+  
+  // Apply standardized ordering using formatPairName
+  const formattedName = formatPairName(normalized?.token0?.symbol, normalized?.token1?.symbol)
+  const [firstSymbol, secondSymbol] = formattedName.split('-')
+  
   return {
-    token0Symbol: getTokenDisplaySymbol(normalized?.token0?.symbol),
-    token1Symbol: getTokenDisplaySymbol(normalized?.token1?.symbol),
+    token0Symbol: firstSymbol,
+    token1Symbol: secondSymbol,
   }
 }
 
@@ -297,7 +305,7 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
       <DashGrid style={{ height: '48px' }}>
         <DataText area="txn" fontWeight="500">
           <Link color={color} external href={urls.showTransaction(item.hash)}>
-            {getTransactionType(item.type, item.token1Symbol, item.token0Symbol)}
+            {getTransactionType(item.type, item.token0Symbol, item.token1Symbol)}
           </Link>
         </DataText>
         <DataText area="value">
