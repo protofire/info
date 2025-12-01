@@ -21,6 +21,7 @@ import { BasicLink } from '../components/Link'
 import Search from '../components/Search'
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink, shortenAddress } from '../utils'
 import { getTokenDisplaySymbol } from '../utils/tokenSymbols'
+import { formatPairName } from '../utils/formatPairName'
 import { useColor } from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { TYPE, ThemedBackground } from '../Theme'
@@ -228,8 +229,7 @@ function PairPage({ pairAddress, history }) {
       <ContentWrapperLarge>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/pairs">{'Pairs '}</BasicLink>→ {displaySymbol0 ?? token0?.symbol}-
-            {displaySymbol1 ?? token1?.symbol}
+            <BasicLink to="/pairs">{'Pairs '}</BasicLink>→ {formatPairName(token0?.symbol, token1?.symbol)}
           </TYPE.body>
           {!below600 && <Search small={true} />}
         </RowBetween>
@@ -256,13 +256,18 @@ function PairPage({ pairAddress, history }) {
                     <TYPE.main fontSize={below1080 ? '1.5rem' : '2rem'} style={{ margin: '0 1rem' }}>
                       {token0 && token1 ? (
                         <>
-                          <HoverSpan onClick={() => history.push(`/token/${token0?.id}`)}>
-                            {displaySymbol0 ?? token0?.symbol}
-                          </HoverSpan>
-                          <span>-</span>
-                          <HoverSpan onClick={() => history.push(`/token/${token1?.id}`)}>
-                            {displaySymbol1 ?? token1?.symbol}
-                          </HoverSpan>{' '}
+                          {formatPairName(token0?.symbol, token1?.symbol).split('-').map((symbol, idx, arr) => {
+                            const isFirstToken = symbol === (displaySymbol0 ?? token0?.symbol) || symbol === getTokenDisplaySymbol(token0?.symbol)
+                            const tokenId = isFirstToken ? token0?.id : token1?.id
+                            return (
+                              <React.Fragment key={idx}>
+                                <HoverSpan onClick={() => history.push(`/token/${tokenId}`)}>
+                                  {symbol}
+                                </HoverSpan>
+                                {idx < arr.length - 1 && <span>-</span>}
+                              </React.Fragment>
+                            )
+                          })}{' '}
                           Pair
                         </>
                       ) : (
@@ -472,9 +477,7 @@ function PairPage({ pairAddress, history }) {
                     <TYPE.main>Pair Name</TYPE.main>
                     <TYPE.main style={{ marginTop: '.5rem' }}>
                       <RowFixed>
-                        <FormattedName text={token0?.symbol ?? ''} maxCharacters={8} />
-                        -
-                        <FormattedName text={token1?.symbol ?? ''} maxCharacters={8} />
+                        <FormattedName text={formatPairName(token0?.symbol, token1?.symbol)} maxCharacters={20} />
                       </RowFixed>
                     </TYPE.main>
                   </Column>

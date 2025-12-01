@@ -19,6 +19,7 @@ import { PAIR_SEARCH, TOKEN_SEARCH } from '../../apollo/queries'
 import FormattedName from '../FormattedName'
 import { TYPE } from '../../Theme'
 import { updateNameData } from '../../utils/data'
+import { formatPairName } from '../../utils/formatPairName'
 
 const Container = styled.div`
   height: 48px;
@@ -466,7 +467,7 @@ export const Search = ({ small = false }) => {
                   <MenuItem>
                     <DoubleTokenLogo a0={pair?.token0?.id} a1={pair?.token1?.id} margin={true} />
                     <TYPE.body style={{ marginLeft: '10px' }}>
-                      {pair.token0.symbol + '-' + pair.token1.symbol} Pair
+                      {formatPairName(pair.token0.symbol, pair.token1.symbol)} Pair
                     </TYPE.body>
                   </MenuItem>
                 </BasicLink>

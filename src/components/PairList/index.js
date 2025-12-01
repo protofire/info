@@ -16,7 +16,7 @@ import QuestionHelper from '../QuestionHelper'
 import { TYPE } from '../../Theme'
 import { PAIR_BLACKLIST } from '../../constants'
 import { AutoColumn } from '../Column'
-import { getTokenDisplaySymbol } from '../../utils/tokenSymbols'
+import { formatPairName } from '../../utils/formatPairName'
 
 dayjs.extend(utc)
 
@@ -198,9 +198,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         true
       )
 
-      const token0Symbol = getTokenDisplaySymbol(pairData.token0.symbol)
-      const token1Symbol = getTokenDisplaySymbol(pairData.token1.symbol)
-      const pairName = `${token0Symbol}-${token1Symbol}`
+      const pairName = formatPairName(pairData.token0.symbol, pairData.token1.symbol)
 
       return (
         <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
