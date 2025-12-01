@@ -16,6 +16,7 @@ import TokenChart from '../components/TokenChart'
 import { BasicLink } from '../components/Link'
 import Search from '../components/Search'
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink, localNumber } from '../utils'
+import { getTokenDisplaySymbol } from '../utils/tokenSymbols'
 import { useTokenData, useTokenTransactions, useTokenPairs } from '../contexts/TokenData'
 import { TYPE, ThemedBackground } from '../Theme'
 import { transparentize } from 'polished'
@@ -123,6 +124,8 @@ function TokenPage({ address, history }) {
     txnChange,
   } = useTokenData(address)
 
+  const displaySymbol = getTokenDisplaySymbol(symbol)
+
   useEffect(() => {
     document.querySelector('body').scrollTo(0, 0)
   }, [])
@@ -162,7 +165,7 @@ function TokenPage({ address, history }) {
 
   // format for long symbol
   const LENGTH = below1080 ? 10 : 16
-  const formattedSymbol = symbol?.length > LENGTH ? symbol.slice(0, LENGTH) + '...' : symbol
+  const formattedSymbol = displaySymbol?.length > LENGTH ? displaySymbol.slice(0, LENGTH) + '...' : displaySymbol
 
   const [dismissed, markAsDismissed] = usePathDismissed(history.location.pathname)
   const [savedTokens, addToken] = useSavedTokens()
@@ -207,7 +210,7 @@ function TokenPage({ address, history }) {
         <RowBetween style={{ flexWrap: 'wrap', alingItems: 'start' }}>
           <AutoRow align="flex-end" style={{ width: 'fit-content' }}>
             <TYPE.body>
-              <BasicLink to="/tokens">{'Tokens '}</BasicLink>→ {symbol}
+              <BasicLink to="/tokens">{'Tokens '}</BasicLink>→ {displaySymbol ?? symbol}
             </TYPE.body>
             <Link
               style={{ width: 'fit-content' }}
@@ -253,7 +256,7 @@ function TokenPage({ address, history }) {
               <span>
                 <RowFixed ml={below500 ? '0' : '2.5rem'} mt={below500 ? '1rem' : '0'}>
                   {!!!savedTokens[address] && !below800 ? (
-                    <Hover onClick={() => addToken(address, symbol)}>
+                    <Hover onClick={() => addToken(address, displaySymbol ?? symbol)}>
                       <StyledIcon>
                         <PlusCircle style={{ marginRight: '0.5rem' }} />
                       </StyledIcon>
@@ -407,7 +410,7 @@ function TokenPage({ address, history }) {
                   <Column>
                     <TYPE.main>Symbol</TYPE.main>
                     <Text style={{ marginTop: '.5rem' }} fontSize={24} fontWeight="500">
-                      <FormattedName text={symbol} maxCharacters={12} />
+                      <FormattedName text={displaySymbol ?? symbol} maxCharacters={12} />
                     </Text>
                   </Column>
                   <Column>

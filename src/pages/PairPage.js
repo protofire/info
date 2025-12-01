@@ -20,6 +20,7 @@ import Loader from '../components/LocalLoader'
 import { BasicLink } from '../components/Link'
 import Search from '../components/Search'
 import { formattedNum, formattedPercent, getPoolLink, getSwapLink, shortenAddress } from '../utils'
+import { getTokenDisplaySymbol } from '../utils/tokenSymbols'
 import { useColor } from '../hooks'
 import { usePairData, usePairTransactions } from '../contexts/PairData'
 import { TYPE, ThemedBackground } from '../Theme'
@@ -175,8 +176,10 @@ function PairPage({ pairAddress, history }) {
   const token1Rate = reserve0 && reserve1 ? formattedNum(reserve0 / reserve1) : '-'
 
   // formatted symbols for overflow
-  const formattedSymbol0 = token0?.symbol.length > 6 ? token0?.symbol.slice(0, 5) + '...' : token0?.symbol
-  const formattedSymbol1 = token1?.symbol.length > 6 ? token1?.symbol.slice(0, 5) + '...' : token1?.symbol
+  const displaySymbol0 = getTokenDisplaySymbol(token0?.symbol)
+  const displaySymbol1 = getTokenDisplaySymbol(token1?.symbol)
+  const formattedSymbol0 = displaySymbol0?.length > 6 ? displaySymbol0.slice(0, 5) + '...' : displaySymbol0
+  const formattedSymbol1 = displaySymbol1?.length > 6 ? displaySymbol1.slice(0, 5) + '...' : displaySymbol1
 
   const below1080 = useMedia('(max-width: 1080px)')
   const below900 = useMedia('(max-width: 900px)')
@@ -225,7 +228,8 @@ function PairPage({ pairAddress, history }) {
       <ContentWrapperLarge>
         <RowBetween>
           <TYPE.body>
-            <BasicLink to="/pairs">{'Pairs '}</BasicLink>→ {token0?.symbol}-{token1?.symbol}
+            <BasicLink to="/pairs">{'Pairs '}</BasicLink>→ {displaySymbol0 ?? token0?.symbol}-
+            {displaySymbol1 ?? token1?.symbol}
           </TYPE.body>
           {!below600 && <Search small={true} />}
         </RowBetween>
@@ -252,10 +256,12 @@ function PairPage({ pairAddress, history }) {
                     <TYPE.main fontSize={below1080 ? '1.5rem' : '2rem'} style={{ margin: '0 1rem' }}>
                       {token0 && token1 ? (
                         <>
-                          <HoverSpan onClick={() => history.push(`/token/${token0?.id}`)}>{token0.symbol}</HoverSpan>
+                          <HoverSpan onClick={() => history.push(`/token/${token0?.id}`)}>
+                            {displaySymbol0 ?? token0?.symbol}
+                          </HoverSpan>
                           <span>-</span>
                           <HoverSpan onClick={() => history.push(`/token/${token1?.id}`)}>
-                            {token1.symbol}
+                            {displaySymbol1 ?? token1?.symbol}
                           </HoverSpan>{' '}
                           Pair
                         </>
@@ -273,7 +279,17 @@ function PairPage({ pairAddress, history }) {
                   }}
                 >
                   {!!!savedPairs[pairAddress] && !below1080 ? (
-                    <Hover onClick={() => addPair(pairAddress, token0.id, token1.id, token0.symbol, token1.symbol)}>
+                    <Hover
+                      onClick={() =>
+                        addPair(
+                          pairAddress,
+                          token0.id,
+                          token1.id,
+                          displaySymbol0 ?? token0.symbol,
+                          displaySymbol1 ?? token1.symbol
+                        )
+                      }
+                    >
                       <StyledIcon>
                         <PlusCircle style={{ marginRight: '0.5rem' }} />
                       </StyledIcon>

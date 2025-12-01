@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Tooltip } from '../QuestionHelper'
+import { getTokenDisplaySymbol } from '../../utils/tokenSymbols'
 
 const TextWrapper = styled.div`
   position: relative;
@@ -19,14 +20,15 @@ const TextWrapper = styled.div`
 
 const FormattedName = ({ text, maxCharacters, margin = false, adjustSize = false, fontSize, link, ...rest }) => {
   const [showHover, setShowHover] = useState(false)
+  const displayText = getTokenDisplaySymbol(text)
 
-  if (!text) {
+  if (!displayText) {
     return ''
   }
 
-  if (text.length > maxCharacters) {
+  if (displayText.length > maxCharacters) {
     return (
-      <Tooltip text={text} show={showHover}>
+      <Tooltip text={displayText} show={showHover}>
         <TextWrapper
           onMouseEnter={() => setShowHover(true)}
           onMouseLeave={() => setShowHover(false)}
@@ -36,7 +38,7 @@ const FormattedName = ({ text, maxCharacters, margin = false, adjustSize = false
           fontSize={fontSize}
           {...rest}
         >
-          {' ' + text.slice(0, maxCharacters - 1) + '...'}
+          {' ' + displayText.slice(0, maxCharacters - 1) + '...'}
         </TextWrapper>
       </Tooltip>
     )
@@ -44,7 +46,7 @@ const FormattedName = ({ text, maxCharacters, margin = false, adjustSize = false
 
   return (
     <TextWrapper margin={margin} adjustSize={adjustSize} link={link} fontSize={fontSize} {...rest}>
-      {text}
+      {displayText}
     </TextWrapper>
   )
 }

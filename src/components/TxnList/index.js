@@ -17,6 +17,7 @@ import FormattedName from '../FormattedName'
 import { TYPE } from '../../Theme'
 import { updateNameData } from '../../utils/data'
 import { BLOCK_EXPLORER_URL } from '../../constants'
+import { getTokenDisplaySymbol } from '../../utils/tokenSymbols'
 dayjs.extend(utc)
 
 const PageButtons = styled.div`
@@ -161,6 +162,17 @@ function getTransactionType(event, symbol0, symbol1) {
   }
 }
 
+function normalizePairSymbols(pair) {
+  if (!pair) {
+    return { token0Symbol: '', token1Symbol: '' }
+  }
+  const normalized = updateNameData(pair)
+  return {
+    token0Symbol: getTokenDisplaySymbol(normalized?.token0?.symbol),
+    token1Symbol: getTokenDisplaySymbol(normalized?.token1?.symbol),
+  }
+}
+
 // @TODO rework into virtualized list
 function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
   // page state
@@ -193,8 +205,9 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.token0Amount = mint.amount0
           newTxn.token1Amount = mint.amount1
           newTxn.account = mint.to
-          newTxn.token0Symbol = updateNameData(mint.pair).token0.symbol
-          newTxn.token1Symbol = updateNameData(mint.pair).token1.symbol
+          const normalized = normalizePairSymbols(mint.pair)
+          newTxn.token0Symbol = normalized.token0Symbol
+          newTxn.token1Symbol = normalized.token1Symbol
           newTxn.amountUSD = mint.amountUSD
           return newTxns.push(newTxn)
         })
@@ -208,27 +221,29 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.token0Amount = burn.amount0
           newTxn.token1Amount = burn.amount1
           newTxn.account = burn.sender
-          newTxn.token0Symbol = updateNameData(burn.pair).token0.symbol
-          newTxn.token1Symbol = updateNameData(burn.pair).token1.symbol
+          const normalized = normalizePairSymbols(burn.pair)
+          newTxn.token0Symbol = normalized.token0Symbol
+          newTxn.token1Symbol = normalized.token1Symbol
           newTxn.amountUSD = burn.amountUSD
           return newTxns.push(newTxn)
         })
       }
       if (transactions.swaps.length > 0) {
         transactions.swaps.map((swap) => {
+          const normalizedSwap = normalizePairSymbols(swap.pair)
           const netToken0 = swap.amount0In - swap.amount0Out
           const netToken1 = swap.amount1In - swap.amount1Out
 
           let newTxn = {}
 
           if (netToken0 < 0) {
-            newTxn.token0Symbol = updateNameData(swap.pair).token0.symbol
-            newTxn.token1Symbol = updateNameData(swap.pair).token1.symbol
+            newTxn.token0Symbol = normalizedSwap.token0Symbol
+            newTxn.token1Symbol = normalizedSwap.token1Symbol
             newTxn.token0Amount = Math.abs(netToken0)
             newTxn.token1Amount = Math.abs(netToken1)
           } else if (netToken1 < 0) {
-            newTxn.token0Symbol = updateNameData(swap.pair).token1.symbol
-            newTxn.token1Symbol = updateNameData(swap.pair).token0.symbol
+            newTxn.token0Symbol = normalizedSwap.token1Symbol
+            newTxn.token1Symbol = normalizedSwap.token0Symbol
             newTxn.token0Amount = Math.abs(netToken1)
             newTxn.token1Amount = Math.abs(netToken0)
           }
@@ -236,13 +251,11 @@ function TxnList({ transactions, symbol0Override, symbol1Override, color }) {
           newTxn.hash = swap.transaction.id
           newTxn.timestamp = swap.transaction.timestamp
           newTxn.type = TXN_TYPE.SWAP
-
           newTxn.amountUSD = swap.amountUSD
           newTxn.account = swap.to
           return newTxns.push(newTxn)
         })
       }
-
       const filtered = newTxns.filter((item) => {
         if (txFilter !== TXN_TYPE.ALL) {
           return item.type === txFilter
