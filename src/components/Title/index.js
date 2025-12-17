@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Flex } from 'rebass'
 import Link from '../Link'
 import { RowFixed } from '../Row'
-import Logo from '../../assets/flow-logo.png'
+import Logo from '../../assets/zircuit-garfield-testnet-logo.png'
 import Wordmark from '../../assets/wordmark_white.svg'
 
 import { BasicLink } from '../Link'
