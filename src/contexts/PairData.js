@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback, useEffect, useState } from 'react'
 
-import { client } from '../apollo/client'
+import { client, blockClient } from '../apollo/client'
+import gql from 'graphql-tag'
 import {
   PAIR_DATA,
   PAIR_CHART,
@@ -39,9 +40,9 @@ dayjs.extend(utc)
 export function safeAccess(object, path) {
   return object
     ? path.reduce(
-        (accumulator, currentValue) => (accumulator && accumulator[currentValue] ? accumulator[currentValue] : null),
-        object
-      )
+      (accumulator, currentValue) => (accumulator && accumulator[currentValue] ? accumulator[currentValue] : null),
+      object
+    )
     : null
 }
 
@@ -184,7 +185,21 @@ export default function Provider({ children }) {
 
 async function getBulkPairData(pairList, ethPrice) {
   const [t1, t2, tWeek] = getTimestampsForChanges()
-  let [{ number: b1 }, { number: b2 }, { number: bWeek }] = await getBlocksFromTimestamps([t1, t2, tWeek])
+
+  // Handle missing historical blocks gracefully
+  const blocks = await getBlocksFromTimestamps([t1, t2, tWeek])
+
+  // Get current block as fallback
+  const currentBlockQuery = await blockClient.query({
+    query: gql`{ blocks(first: 1, orderBy: number, orderDirection: desc) { number } }`,
+    fetchPolicy: 'cache-first',
+  })
+  const currentBlock = parseInt(currentBlockQuery.data.blocks[0]?.number || '0')
+
+  // Use available blocks or fallback to current block
+  const b1 = blocks[0]?.number || currentBlock
+  const b2 = blocks[1]?.number || currentBlock
+  const bWeek = blocks[2]?.number || currentBlock
 
   try {
     let current = await client.query({
@@ -196,12 +211,17 @@ async function getBulkPairData(pairList, ethPrice) {
     })
 
     let [oneDayResult, twoDayResult, oneWeekResult] = await Promise.all(
-      [b1, b2, bWeek].map(async (block) => {
-        let result = client.query({
-          query: PAIRS_HISTORICAL_BULK(block, pairList),
-          fetchPolicy: 'cache-first',
-        })
-        return result
+      [b1, b2, bWeek].map(async (block, index) => {
+        const blockNames = ['1-day', '2-day', '1-week']
+        try {
+          let result = await client.query({
+            query: PAIRS_HISTORICAL_BULK(block, pairList),
+            fetchPolicy: 'cache-first',
+          })
+          return result
+        } catch (error) {
+          return { data: { pairs: [] } }
+        }
       })
     )
 
@@ -219,35 +239,48 @@ async function getBulkPairData(pairList, ethPrice) {
 
     let pairData = await Promise.all(
       current &&
-        current.data.pairs.map(async (pair) => {
-          let data = pair
-          let oneDayHistory = oneDayData?.[pair.id]
-          if (!oneDayHistory) {
+      current.data.pairs.map(async (pair) => {
+        let data = pair
+        let oneDayHistory = oneDayData?.[pair.id]
+        if (!oneDayHistory) {
+          try {
             let newData = await client.query({
               query: PAIR_DATA(pair.id, b1),
               fetchPolicy: 'cache-first',
             })
             oneDayHistory = newData.data.pairs[0]
+          } catch (error) {
+            oneDayHistory = null
           }
-          let twoDayHistory = twoDayData?.[pair.id]
-          if (!twoDayHistory) {
+        }
+        let twoDayHistory = twoDayData?.[pair.id]
+        if (!twoDayHistory) {
+          try {
             let newData = await client.query({
               query: PAIR_DATA(pair.id, b2),
               fetchPolicy: 'cache-first',
             })
             twoDayHistory = newData.data.pairs[0]
+          } catch (error) {
+            twoDayHistory = null
           }
-          let oneWeekHistory = oneWeekData?.[pair.id]
-          if (!oneWeekHistory) {
+        }
+        let oneWeekHistory = oneWeekData?.[pair.id]
+        if (!oneWeekHistory) {
+          try {
             let newData = await client.query({
               query: PAIR_DATA(pair.id, bWeek),
               fetchPolicy: 'cache-first',
             })
             oneWeekHistory = newData.data.pairs[0]
+          } catch (error) {
+            oneWeekHistory = null
           }
-          data = parseData(data, oneDayHistory, twoDayHistory, oneWeekHistory, ethPrice, b1)
-          return data
-        })
+        }
+
+        data = parseData(data, oneDayHistory, twoDayHistory, oneWeekHistory, ethPrice, b1)
+        return data
+      })
     )
     return pairData
   } catch (e) {
@@ -276,16 +309,21 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
     oneWeekData ? data?.untrackedVolumeUSD - oneWeekData?.untrackedVolumeUSD : data.untrackedVolumeUSD
   )
 
-  // set volume properties
-  data.oneDayVolumeUSD = parseFloat(oneDayVolumeUSD)
-  data.oneWeekVolumeUSD = oneWeekVolumeUSD
-  data.volumeChangeUSD = volumeChangeUSD
-  data.oneDayVolumeUntracked = oneDayVolumeUntracked
-  data.oneWeekVolumeUntracked = oneWeekVolumeUntracked
-  data.volumeChangeUntracked = volumeChangeUntracked
+  // set volume properties with fallbacks
+  data.oneDayVolumeUSD = isNaN(parseFloat(oneDayVolumeUSD)) ? 0 : parseFloat(oneDayVolumeUSD)
+  data.oneWeekVolumeUSD = isNaN(oneWeekVolumeUSD) ? 0 : oneWeekVolumeUSD
+  data.volumeChangeUSD = isNaN(volumeChangeUSD) ? 0 : volumeChangeUSD
+  data.oneDayVolumeUntracked = isNaN(oneDayVolumeUntracked) ? 0 : oneDayVolumeUntracked
+  data.oneWeekVolumeUntracked = isNaN(oneWeekVolumeUntracked) ? 0 : oneWeekVolumeUntracked
+  data.volumeChangeUntracked = isNaN(volumeChangeUntracked) ? 0 : volumeChangeUntracked
 
-  // set liquidity properties
-  data.trackedReserveUSD = data.trackedReserveETH * ethPrice
+
+  // set liquidity properties with fallbacks
+  const calculatedTrackedReserveUSD = data.trackedReserveETH * ethPrice
+  data.trackedReserveUSD = isNaN(calculatedTrackedReserveUSD) || !isFinite(calculatedTrackedReserveUSD)
+    ? data.reserveUSD || 0
+    : calculatedTrackedReserveUSD
+
   data.liquidityChangeUSD = getPercentChange(data.reserveUSD, oneDayData?.reserveUSD)
 
   // format if pair hasnt existed for a day or a week
@@ -312,6 +350,11 @@ function parseData(data, oneDayData, twoDayData, oneWeekData, ethPrice, oneDayBl
 
   // format incorrect names
   updateNameData(data)
+
+  // Final safety checks to ensure valid data
+  if (isNaN(data.trackedReserveUSD) || data.trackedReserveUSD < 0) {
+    data.trackedReserveUSD = data.reserveUSD || 0
+  }
 
   return data
 }
@@ -646,3 +689,4 @@ export function useAllPairData() {
   const [state] = usePairDataContext()
   return state || {}
 }
+

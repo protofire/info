@@ -73,7 +73,7 @@ const GlobalChart = ({ display }) => {
   return chartDataFiltered ? (
     <>
       {below800 && (
-        <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#4b79c4'} />
+        <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#0cb259'} />
       )}
 
       {chartDataFiltered && chartView === CHART_VIEW.LIQUIDITY && (

@@ -1,8 +1,8 @@
-export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://abscan.org' //TEMP
-export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'Abstract Explorer'
-export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'abstract'
-export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x566d7510dee58360a64c9827257cf6d0dc43985e'
-export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://sakuraswap.com'
+export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'https://explorer.zircuit.com'
+export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'Zircuit Explorer'
+export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'zircuit-mainnet'
+export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x712ebc47689c0d4bac7dda9c7b31bbf7361b6fce'
+export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://staging.zircuit-swap.w3us.site'
 
 export const BUNDLE_ID = '1'
 

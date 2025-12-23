@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   z-index: 9999;
   box-sizing: border-box;
   /* background-color: #1b1c22; */
-  background: linear-gradient(193.68deg, #2c2323ff 0.68%, #000000 100.48%);
+  background: linear-gradient(193.68deg, #272c23 0.68%, #000000 100.48%);
   color: ${({ theme }) => theme.bg2};
 
   @media screen and (max-width: 800px) {
