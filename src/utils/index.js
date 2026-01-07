@@ -8,7 +8,14 @@ import { GET_BLOCK, GET_BLOCKS, SHARE_VALUE } from '../apollo/queries'
 import { Text } from 'rebass'
 import _Decimal from 'decimal.js-light'
 import toFormat from 'toformat'
-import { BLOCK_EXPLORER_URL, CHAIN_SHORTNAME, SWAP_LINK, timeframeOptions } from '../constants'
+import {
+  BLOCK_EXPLORER_URL,
+  CHAIN_SHORTNAME,
+  SWAP_LINK,
+  timeframeOptions,
+  WRAPPED_NATIVE_TOKEN_ADDRESS,
+  NATIVE_TOKEN_SYMBOL,
+} from '../constants'
 import Numeral from 'numeral'
 
 // format libraries
@@ -42,13 +49,16 @@ export function getPoolLink(token0Address, token1Address = null, remove = false)
     return (
       `${SWAP_LINK}/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${'ETH'}?chain=${CHAIN_SHORTNAME}`
+      `/v2/${
+        token0Address === WRAPPED_NATIVE_TOKEN_ADDRESS ? NATIVE_TOKEN_SYMBOL : token0Address
+      }/${NATIVE_TOKEN_SYMBOL}?chain=${CHAIN_SHORTNAME}`
     )
   } else {
     return (
       `${SWAP_LINK}/#/` +
       (remove ? `remove` : `add`) +
-      `/v2/${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address}/${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address
+      `/v2/${token0Address === WRAPPED_NATIVE_TOKEN_ADDRESS ? NATIVE_TOKEN_SYMBOL : token0Address}/${
+        token1Address === WRAPPED_NATIVE_TOKEN_ADDRESS ? NATIVE_TOKEN_SYMBOL : token1Address
       }?chain=${CHAIN_SHORTNAME}`
     )
   }
@@ -58,8 +68,9 @@ export function getSwapLink(token0Address, token1Address = null) {
   if (!token1Address) {
     return `${SWAP_LINK}/#/swap?chain=${CHAIN_SHORTNAME}?inputCurrency=${token0Address}`
   } else {
-    return `${SWAP_LINK}/#/swap?chain=${CHAIN_SHORTNAME}?inputCurrency=${token0Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token0Address
-      }&outputCurrency=${token1Address === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'ETH' : token1Address}`
+    return `${SWAP_LINK}/#/swap?chain=${CHAIN_SHORTNAME}?inputCurrency=${
+      token0Address === WRAPPED_NATIVE_TOKEN_ADDRESS ? NATIVE_TOKEN_SYMBOL : token0Address
+    }&outputCurrency=${token1Address === WRAPPED_NATIVE_TOKEN_ADDRESS ? NATIVE_TOKEN_SYMBOL : token1Address}`
   }
 }
 

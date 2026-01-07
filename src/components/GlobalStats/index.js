@@ -4,6 +4,7 @@ import { RowFixed, RowBetween } from '../Row'
 import { useMedia } from 'react-use'
 import { useGlobalData, useEthPrice } from '../../contexts/GlobalData'
 import { formattedNum, localNumber } from '../../utils'
+import { CHAIN_NAME, NATIVE_TOKEN_SYMBOL } from '../../constants'
 
 import UniPrice from '../UniPrice'
 import { TYPE } from '../../Theme'
@@ -47,7 +48,7 @@ export default function GlobalStats() {
               }}
               style={{ position: 'relative' }}
             >
-              Network: <Medium>Zircuit</Medium>
+              Network: <Medium>{CHAIN_NAME}</Medium>
             </TYPE.main>
           )}
           {!below400 && (
@@ -61,7 +62,7 @@ export default function GlobalStats() {
               }}
               style={{ position: 'relative' }}
             >
-              ETH Price: <Medium>{formattedEthPrice}</Medium>
+              {NATIVE_TOKEN_SYMBOL} Price: <Medium>{formattedEthPrice}</Medium>
               {showPriceCard && <UniPrice />}
             </TYPE.main>
           )}

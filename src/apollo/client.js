@@ -2,8 +2,13 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
 import { CHAIN_SHORTNAME } from '../constants'
+import chainConfig from '../config/chain.config'
+import { validateUrl } from '../config/validators'
 
-export const GRAPH_NODE_URL = process.env.REACT_APP_GRAPH_NODE_URL ?? `https://graph.zircuit-swap.w3us.site`
+export const GRAPH_NODE_URL = validateUrl(
+  process.env.REACT_APP_GRAPH_NODE_URL ?? chainConfig.graphNodeUrl,
+  'GRAPH_NODE_URL'
+)
 
 // TODO: revert
 // Temporary measure until migrated fully

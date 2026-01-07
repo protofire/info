@@ -20,7 +20,7 @@ import Meta from './components/Meta'
 import LocalLoader from './components/LocalLoader'
 import { useLatestBlocks } from './contexts/Application'
 import GoogleAnalyticsReporter from './components/analytics/GoogleAnalyticsReporter'
-import { PAIR_BLACKLIST, TOKEN_BLACKLIST } from './constants'
+import { PAIR_BLACKLIST, TOKEN_BLACKLIST, PRIMARY_COLOR } from './constants'
 
 const AppWrapper = styled.div`
   position: relative;
@@ -79,7 +79,7 @@ const WarningBanner = styled.div`
 `
 
 const UrlBanner = styled.div`
-  background-color: #0cb259;
+  background-color: ${PRIMARY_COLOR};
   padding: 1rem;
   color: white;
   width: 100%;

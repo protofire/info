@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react'
 import { ResponsiveContainer } from 'recharts'
-import { timeframeOptions } from '../../constants'
+import { timeframeOptions, PRIMARY_COLOR } from '../../constants'
 import { useGlobalChartData, useGlobalData } from '../../contexts/GlobalData'
 import { useMedia } from 'react-use'
 import DropdownSelect from '../DropdownSelect'
@@ -73,7 +73,7 @@ const GlobalChart = ({ display }) => {
   return chartDataFiltered ? (
     <>
       {below800 && (
-        <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={'#0cb259'} />
+        <DropdownSelect options={CHART_VIEW} active={chartView} setActive={setChartView} color={PRIMARY_COLOR} />
       )}
 
       {chartDataFiltered && chartView === CHART_VIEW.LIQUIDITY && (

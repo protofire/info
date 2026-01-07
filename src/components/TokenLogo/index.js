@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { isAddress } from '../../utils/index.js'
 import EthereumLogo from '../../assets/eth.png'
+import { WRAPPED_NATIVE_TOKEN_ADDRESS } from '../../constants'
 
 const BAD_IMAGES = {}
 
@@ -56,7 +57,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     address = '0xc011a72400e58ecd99ee497cf89e3775d4bd732f'
   }
 
-  if (address?.toLowerCase() === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') {
+  if (address?.toLowerCase() === WRAPPED_NATIVE_TOKEN_ADDRESS) {
     return (
       <StyledEthereumLogo size={size} {...rest}>
         <img
@@ -71,6 +72,8 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     )
   }
 
+  // Use placeholder for token logos - chain-agnostic approach
+  // Individual chains can provide their own token logo service via environment/config
   const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
     address
   )}/logo.png`

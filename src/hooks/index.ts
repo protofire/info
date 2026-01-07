@@ -4,10 +4,14 @@ import Vibrant from 'node-vibrant'
 import { hex } from 'wcag-contrast'
 import { isAddress } from '../utils'
 import copy from 'copy-to-clipboard'
+import { PRIMARY_COLOR } from '../constants'
 
 export function useColor(tokenAddress, token) {
-  const [color, setColor] = useState('#2172E5')
+  // Default to brand color when no token logo available
+  const [color, setColor] = useState(PRIMARY_COLOR)
   if (tokenAddress) {
+    // Note: TrustWallet assets are Ethereum-specific. For other chains,
+    // this will fall back to PRIMARY_COLOR gracefully when image fetch fails
     const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${isAddress(
       tokenAddress
     )}/logo.png`

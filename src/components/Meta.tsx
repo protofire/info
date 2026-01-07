@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import React from 'react'
-
-const WEBSITE_HOST_URL = 'https://v2-info.staging.zircuit-swap.w3us.site'
+import { WEBSITE_URL } from '../constants'
 
 const Meta = ({ location }: RouteComponentProps): JSX.Element => {
   return (
     <Helmet>
-      <link rel="canonical" href={`${WEBSITE_HOST_URL}${location.pathname}`} />
+      <link rel="canonical" href={`${WEBSITE_URL}${location.pathname}`} />
     </Helmet>
   )
 }

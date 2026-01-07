@@ -21,6 +21,7 @@ import { formattedNum, formattedPercent } from '../utils'
 import { TYPE, ThemedBackground } from '../Theme'
 import { transparentize } from 'polished'
 import { CustomLink } from '../components/Link'
+import { PRIMARY_COLOR } from '../constants'
 
 import { PageWrapper, ContentWrapper } from '../components'
 import CheckBox from '../components/Checkbox'
@@ -69,7 +70,7 @@ function GlobalPage() {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, '#0cb259')} />
+      <ThemedBackground backgroundColor={transparentize(0.6, PRIMARY_COLOR)} />
       <ContentWrapper>
         <div>
           <AutoColumn gap="24px" style={{ paddingBottom: below800 ? '0' : '24px' }}>
