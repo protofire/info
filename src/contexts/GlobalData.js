@@ -22,6 +22,7 @@ import {
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { useAllPairData } from './PairData'
 import { useTokenChartDataCombined } from './TokenData'
+import { formatPairName } from '../utils/formatPairName'
 const UPDATE = 'UPDATE'
 const UPDATE_TXNS = 'UPDATE_TXNS'
 const UPDATE_CHART = 'UPDATE_CHART'
@@ -721,7 +722,7 @@ export function useTopLps() {
             const pairData = allPairs[entry.pair.id]
             return topLps.push({
               user: entry.user,
-              pairName: pairData.token0.symbol + '-' + pairData.token1.symbol,
+              pairName: formatPairName(pairData.token0.symbol, pairData.token1.symbol),
               pairAddress: entry.pair.id,
               token0: pairData.token0.id,
               token1: pairData.token1.id,

@@ -16,6 +16,7 @@ import { RowFixed } from '../Row'
 import { ButtonLight } from '../ButtonStyled'
 import { TYPE } from '../../Theme'
 import FormattedName from '../FormattedName'
+import { formatPairName } from '../../utils/formatPairName'
 
 dayjs.extend(utc)
 
@@ -152,7 +153,7 @@ function PositionList({ positions }) {
             <CustomLink to={'/pair/' + position.pair.id}>
               <TYPE.main style={{ whiteSpace: 'nowrap' }} to={'/pair/'}>
                 <FormattedName
-                  text={position.pair.token0.symbol + '-' + position.pair.token1.symbol}
+                  text={formatPairName(position.pair.token0.symbol, position.pair.token1.symbol)}
                   maxCharacters={below740 ? 10 : 18}
                 />
               </TYPE.main>

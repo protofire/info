@@ -16,6 +16,7 @@ import QuestionHelper from '../QuestionHelper'
 import { TYPE } from '../../Theme'
 import { PAIR_BLACKLIST } from '../../constants'
 import { AutoColumn } from '../Column'
+import { formatPairName } from '../../utils/formatPairName'
 
 dayjs.extend(utc)
 
@@ -197,6 +198,8 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
         true
       )
 
+      const pairName = formatPairName(pairData.token0.symbol, pairData.token1.symbol)
+
       return (
         <DashGrid style={{ height: '48px' }} disbaleLinks={disbaleLinks} focus={true}>
           <DataText area="name" fontWeight="500">
@@ -208,12 +211,7 @@ function PairList({ pairs, color, disbaleLinks, maxItems = 10, useTracked = fals
               margin={!below740}
             />
             <CustomLink style={{ marginLeft: '20px', whiteSpace: 'nowrap' }} to={'/pair/' + pairAddress} color={color}>
-              <FormattedName
-                text={pairData.token0.symbol + '-' + pairData.token1.symbol}
-                maxCharacters={below600 ? 8 : 16}
-                adjustSize={true}
-                link={true}
-              />
+              <FormattedName text={pairName} maxCharacters={below600 ? 8 : 16} adjustSize={true} link={true} />
             </CustomLink>
           </DataText>
           <DataText area="liq">{formatDataText(liquidity, pairData.trackedReserveUSD)}</DataText>

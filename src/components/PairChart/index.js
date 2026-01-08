@@ -14,6 +14,7 @@ import DropdownSelect from '../DropdownSelect'
 import CandleStickChart from '../CandleChart'
 import LocalLoader from '../LocalLoader'
 import { useDarkModeManager } from '../../contexts/LocalStorage'
+import { getTokenDisplaySymbol } from '../../utils/tokenSymbols'
 
 const ChartWrapper = styled.div`
   height: 100%;
@@ -70,11 +71,12 @@ const PairChart = ({ address, color, base0, base1 }) => {
   const hourlyRate0 = hourlyData && hourlyData[0]
   const hourlyRate1 = hourlyData && hourlyData[1]
 
+  const displaySymbol0 = getTokenDisplaySymbol(pairData?.token0?.symbol) ?? pairData?.token0?.symbol
+  const displaySymbol1 = getTokenDisplaySymbol(pairData?.token1?.symbol) ?? pairData?.token1?.symbol
+
   // formatted symbols for overflow
-  const formattedSymbol0 =
-    pairData?.token0?.symbol.length > 6 ? pairData?.token0?.symbol.slice(0, 5) + '...' : pairData?.token0?.symbol
-  const formattedSymbol1 =
-    pairData?.token1?.symbol.length > 6 ? pairData?.token1?.symbol.slice(0, 5) + '...' : pairData?.token1?.symbol
+  const formattedSymbol0 = displaySymbol0?.length > 6 ? displaySymbol0.slice(0, 5) + '...' : displaySymbol0
+  const formattedSymbol1 = displaySymbol1?.length > 6 ? displaySymbol1.slice(0, 5) + '...' : displaySymbol1
 
   const below1600 = useMedia('(max-width: 1600px)')
   const below1080 = useMedia('(max-width: 1080px)')
