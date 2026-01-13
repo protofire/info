@@ -2,7 +2,7 @@ export const BLOCK_EXPLORER_URL = process.env.REACT_APP_BLOCK_EXPLORER_URL || 'h
 export const BLOCK_EXPLORER_NAME = process.env.REACT_APP_BLOCK_EXPLORER_NAME || 'Zircuit Explorer'
 export const CHAIN_SHORTNAME = process.env.REACT_APP_CHAIN_SHORTNAME || 'zircuit-mainnet'
 export const FACTORY_ADDRESS = process.env.REACT_APP_FACTORY_ADDRESS || '0x712ebc47689c0d4bac7dda9c7b31bbf7361b6fce'
-export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://staging.zircuit-swap.w3us.site'
+export const SWAP_LINK = process.env.REACT_APP_SWAP_LINK || 'https://staging.swap.zircuit.com'
 
 export const BUNDLE_ID = '1'
 
